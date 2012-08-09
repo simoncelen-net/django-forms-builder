@@ -1,4 +1,3 @@
-
 from django.conf import settings
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.sites.models import Site
@@ -15,7 +14,7 @@ from forms_builder.forms.settings import SEND_FROM_SUBMITTER, USE_SITES
 from forms_builder.forms.signals import form_invalid, form_valid
 
 
-def form_detail(request, slug, template="forms/form_detail.html"):
+def form_detail(request, slug, template="forms/form_detail.html", success_url=None):
     """
     Display a built form and handle submission.
     """
@@ -67,7 +66,9 @@ def form_detail(request, slug, template="forms/form_detail.html"):
                                    attachments=attachments,
                                    fail_silently=settings.DEBUG)
             form_valid.send(sender=request, form=form_for_form, entry=entry)
-            return redirect(reverse("form_sent", kwargs={"slug": form.slug}))
+            if success_url is None:
+                success_url = reverse("form_sent", kwargs={"slug": form.slug})
+            return redirect(success_url)
     context = {"form": form}
     return render_to_response(template, context, request_context)
 
