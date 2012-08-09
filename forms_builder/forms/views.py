@@ -68,6 +68,8 @@ def form_detail(request, slug, template="forms/form_detail.html", success_url=No
             form_valid.send(sender=request, form=form_for_form, entry=entry)
             if success_url is None:
                 success_url = reverse("form_sent", kwargs={"slug": form.slug})
+            # Check to see if the POST data overrides the view's success_url argument.
+            success_url = request.POST.get("success_url", success_url)
             return redirect(success_url)
     context = {"form": form}
     return render_to_response(template, context, request_context)
