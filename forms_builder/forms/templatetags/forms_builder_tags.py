@@ -42,12 +42,12 @@ class BuiltFormNode(template.Node):
 @register.tag
 def render_built_form(parser, token):
     """
-    render_build_form takes one argument in one of the following formats:
+    render_built_form takes one argument in one of the following formats:
 
-    {% render_build_form form_instance %}
-    {% render_build_form form=form_instance %}
-    {% render_build_form id=form_instance.id %}
-    {% render_build_form slug=form_instance.slug %}
+    {% render_built_form form_instance %}
+    {% render_built_form form=form_instance %}
+    {% render_built_form id=form_instance.id %}
+    {% render_built_form slug=form_instance.slug %}
 
     """
     try:
